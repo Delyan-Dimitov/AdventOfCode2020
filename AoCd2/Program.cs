@@ -9,26 +9,45 @@ namespace AoCd2
         static void Main(string[] args)
         {
             var input = Console.ReadLine();
-            var list = new List<int>();
+            var list = new List<string>();
+            int counter = 0;
+            int counter2 = 0;
             while (input != "STOP")
             {
-                list.Add(int.Parse(input));
+                list.Add(input);
                 input = Console.ReadLine();
             }
-            for (int i = 0; i < list.Count; i++)
+            // Part 1
+            foreach (var item in list)
             {
-                for (int j = 0; j < list.Count; j++)
+                var arr = item.Split(" ").ToArray();
+                var bounds = arr[0].Split("-").ToArray();
+                int lowBound = int.Parse(bounds[0]);
+                int upperBound = int.Parse(bounds[1]);
+                char character = arr[1].First();
+                var password = arr[2];
+                int chCount = 0;
+                foreach (char ch in password)
                 {
-                    for (int k = 0; k < list.Count; k++)
+                    if (ch == character)
                     {
-                        if (list[i] + list[j] + list[k] == 2020)
-                        {
-                            Console.WriteLine(list[i] * list[j] * list[k]);
-                            return;
-                        }
+                        chCount++;
                     }
                 }
+                if (chCount >= lowBound && chCount <= upperBound)
+                {
+                    counter++;
+                }
+                if (password[lowBound - 1] == character ^ password[upperBound - 1] == character )
+                {
+                    counter2++;
+                }
             }
+            Console.WriteLine(counter);
+            Console.WriteLine(counter2);
+
+            // Part 2
+          
         }
     }
 }
